@@ -1,0 +1,10 @@
+run_id,result,recorded_at
+run-101,Queued,2026-11-10T08:00:00Z
+run-101,Running,2026-11-10T08:20:00Z
+run-101,Failed,2026-11-10T08:22:00Z
+run-101,Queued,2026-11-10T08:25:00Z
+run-101,Running,2026-11-10T08:30:00Z
+run-101,Passed,2026-11-10T08:34:00Z
+run-102,Queued,2026-11-10T08:01:00Z
+run-102,Running,2026-11-10T08:04:00Z
+run-102,Passed,2026-11-10T08:07:00Z

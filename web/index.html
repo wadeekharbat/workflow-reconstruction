@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Workflow Reconstruction</title>
+  <link rel="stylesheet" href="/app.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <span class="brand"><span class="brand-mark" aria-hidden="true">↳</span> Workflow Reconstruction</span>
+      <span class="local-label">Local analysis</span>
+    </div>
+  </header>
+  <main class="shell">
+    <div class="intro">
+      <h1>Trace a workflow</h1>
+      <p>Find slow transitions and trace them back to the records in your export.</p>
+    </div>
+
+    <section class="card input-card" aria-labelledby="input-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="input-title">CSV source</h2>
+          <p id="source-name">Choose a CSV export or open the synthetic CI example.</p>
+        </div>
+        <div class="actions">
+          <button type="button" id="sample-button">Open example</button>
+          <button type="button" class="primary" id="file-button">Choose CSV</button>
+          <input type="file" id="file-input" accept=".csv,text/csv" hidden>
+        </div>
+      </div>
+      <form id="mapping" aria-describedby="mapping-hint" hidden>
+        <p id="mapping-hint"></p>
+        <div class="fields">
+          <label>Case ID<select name="case" required></select></label>
+          <label>Stage<select name="stage" required></select></label>
+          <label>Timestamp<select name="time" required></select></label>
+        </div>
+        <details>
+          <summary>Timestamp and data options</summary>
+          <div class="fields">
+            <label>Tie-break sequence<select name="order"></select></label>
+            <label>Timestamp format<input name="format" placeholder="%d/%m/%Y %H:%M"></label>
+            <label>Unknown stage value<input name="unknown" placeholder="e.g. -100"></label>
+          </div>
+          <p>Leave the format blank for ISO timestamps with a UTC offset. Map a numeric sequence if it establishes order when timestamps match.</p>
+        </details>
+        <button type="submit" class="primary" id="analyze-button">Analyze workflow</button>
+      </form>
+      <p id="status" role="status" hidden></p>
+      <p id="error" role="alert" hidden></p>
+    </section>
+
+    <section id="results" aria-label="Analysis results" hidden>
+      <dl class="stats">
+        <div class="card"><dt>Data records</dt><dd id="stat-records"></dd></div>
+        <div class="card"><dt>Cases analyzed</dt><dd id="stat-cases"></dd></div>
+        <div class="card"><dt>Cases with stage returns</dt><dd id="stat-returns"></dd></div>
+      </dl>
+      <p id="exclusions" hidden></p>
+      <div class="results-grid">
+        <section class="card transitions" aria-labelledby="transitions-title">
+          <div class="section-heading">
+            <div>
+              <h2 id="transitions-title">Transitions</h2>
+              <p>Elapsed time between recorded stage entries.</p>
+            </div>
+            <label class="sort-label">Sort by
+              <select id="sort">
+                <option value="count">Frequency</option>
+                <option value="duration">Median elapsed</option>
+              </select>
+            </label>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th scope="col">Stage change</th><th scope="col">Count</th><th scope="col">Median elapsed</th></tr></thead>
+              <tbody id="transition-rows"></tbody>
+            </table>
+          </div>
+          <p id="empty" hidden>No ordered stage changes were found in this export.</p>
+          <button type="button" id="more" hidden>Show more transitions</button>
+        </section>
+        <aside class="card evidence" id="evidence" aria-labelledby="evidence-title">
+          <h2 id="evidence-title">Source evidence</h2>
+          <p id="evidence-status" class="visually-hidden" role="status"></p>
+          <p id="evidence-empty">Select a stage change to see a source example.</p>
+          <div id="evidence-body" hidden>
+            <h3 id="evidence-transition"></h3>
+            <dl class="evidence-meta">
+              <div><dt>Case ID</dt><dd id="evidence-case"></dd></div>
+              <div><dt>Longest observed</dt><dd id="evidence-elapsed"></dd></div>
+            </dl>
+            <ol id="evidence-records" class="timeline"></ol>
+            <p class="record-note">Elapsed time may include work and waiting.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
