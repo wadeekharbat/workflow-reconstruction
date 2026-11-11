@@ -3,7 +3,6 @@ const mapping = byId("mapping");
 const fileInput = byId("file-input");
 const sampleButton = byId("sample-button");
 const fileButton = byId("file-button");
-const analyzeButton = byId("analyze-button");
 const sort = byId("sort");
 const more = byId("more");
 const pageSize = 25;
