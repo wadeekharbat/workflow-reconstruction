@@ -2,6 +2,8 @@
 
 Use a CSV export to see where work spent time between recorded stages and which cases returned to an earlier stage. Each transition shows its frequency and median elapsed time. Select a transition to see the original CSV lines for its longest observed example.
 
+![Workflow Reconstruction showing the Queued to Running transition and its source CSV rows](./image.png)
+
 ## Use the local browser app
 
 Run this from the project folder with Python 3.11 or newer. No packages are needed.
